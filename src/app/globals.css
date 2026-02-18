@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --flavor-color: #f9fafb;
+  /* Default flavor color */
+}
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-marhey);
+  --font-mono: var(--font-marhey);
+}
+
+body {
+  background: #ffffff;
+  color: var(--foreground);
+  font-family: var(--font-marhey), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Add a subtle flavor indicator at the bottom of the page */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--flavor-color, #f9fafb);
+  transition: background-color 0.3s ease;
+  z-index: 50;
+}
