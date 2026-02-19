@@ -1,0 +1,41 @@
+# Animation Strategy & Issue Analysis Report
+
+## Project: Best Egyptian Juice - Interactive Hero & About Experience
+
+### 1. ScrollTrigger Animation Overview
+
+The project utilizes **GSAP (GreenSock Animation Platform)** with the **ScrollTrigger** plugin to create a seamless transition between the "Hero" section and the "About" section. The centerpiece of this experience is the juice can image, which undergoes a complex spatial transformation.
+
+#### Key Animated Components:
+*   **Product Image (Juice Can)**: 
+    *   **Trigger**: Entrance of the `aboutContainerRef` section.
+    *   **Behavior**: Transitions from a static Hero center position to a `fixed` position in the viewport as you scroll.
+    *   **Endpoint**: It lands in the About section exactly next to the descriptive text.
+    *   **Final State**: Switches from `fixed` to `absolute` positioning upon "landing" so it scrolls naturally with the rest of the About content.
+*   **Hero Grid Images**: Fade and slide in on mount with a stagger effect.
+*   **Hero Heading**: Slides in from the side based on navigation direction (Next/Prev).
+*   **Control Buttons**: Fade in with a slight vertical slide on mount.
+*   **Background Blob**: An amorphous shape in the About section that fades in only once the juice can has landed.
+
+---
+
+### 2. Disappearing Image: Root Cause Analysis
+
+During development, an issue occurred where the juice can image would disappear immediately upon starting a scroll. 
+
+#### The Problems Identified:
+1.  **Mount Timing Conflict**: The Hero images were set to `opacity: 0` in their initial JSX styles. A `useEffect` was responsible for animating them to `opacity: 1` after a 1-second delay. If a user scrolled before this 1-second window closed, the ScrollTrigger would activate on an invisible element.
+2.  **Position Hand-off Logic**: When switching from `position: static` (Hero) to `position: fixed` (Transitioning) to `position: absolute` (Landed), GSAP did not have immediate viewport coordinates. This caused the image to "jump" to `0,0` or lose its visibility property during the split-second property swap.
+3.  **Ref Initialization**: The `productImageRef` was being redeclared locally in some versions, shadowing the context ref and preventing the ScrollTrigger from correctly targeting the DOM element.
+
+---
+
+### 3. The Solutions Implemented
+
+*   **Synchronized State Management**: Updated `onEnter` within the ScrollTrigger to immediately force `opacity: 1` and capture current `getBoundingClientRect()` values. This ensures the image is visible and correctly positioned the millisecond scrolling begins.
+*   **Absolute Landing**: Implemented the `onLeave` callback to transition the image into `position: absolute` relative to the About section. This "stacks" it next to the text permanently.
+*   **Coordinate Synchronization**: Harmonized the viewport-relative logic (`fixed`) with the container-relative logic (`absolute`) using a common `-280px` offset and functional coordinate calculation.
+*   **Dependency Protection**: Added robust null-checks for all refs (`productImg`, `contentWrapper`, `placeholder`) to ensure animations only run when the DOM is fully ready.
+
+---
+*Report generated on 2026-02-18*

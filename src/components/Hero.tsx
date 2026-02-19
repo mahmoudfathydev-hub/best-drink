@@ -17,64 +17,91 @@ const gravitasOne = Gravitas_One({
 });
 type Flavor = (typeof data)[0];
 function Hero() {
-  const { productImageRef, aboutContainerRef } = useProductImage();
+  const { productImageRef, aboutContainerRef, menuContainerRef } = useProductImage();
   const { backgroundColor, setBackgroundColor } = useTheme();
   const heroRef = useRef<HTMLElement | null>(null);
   const buttonsRef = useRef<HTMLDivElement | null>(null);
   const blobRef = useRef<HTMLDivElement | null>(null);
   const contentWrapperRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    if (!productImageRef.current || !aboutContainerRef.current || !contentWrapperRef.current) return;
+    if (!productImageRef.current || !aboutContainerRef.current || !contentWrapperRef.current || !menuContainerRef.current) return;
+
     const productImg = productImageRef.current;
+    const blob = blobRef.current;
+    const contentWrapper = contentWrapperRef.current;
+    const menuSection = menuContainerRef.current;
+
     const ctx = gsap.context(() => {
       ScrollTrigger.getAll().forEach(t => t.kill());
-      const timeline = gsap.timeline({
+
+      const aboutPlaceholder = contentWrapper?.firstElementChild as HTMLElement;
+      if (!aboutPlaceholder || !productImg || !contentWrapper) return;
+
+      // Master Timeline for all sections
+      const masterTL = gsap.timeline({
         scrollTrigger: {
           trigger: aboutContainerRef.current,
           start: "top bottom",
-          end: "center center",
+          end: "bottom center", // Stop moving further down once it hits the middle of About
           scrub: 1.5,
           onEnter: () => {
-            gsap.set(productImg, { position: "fixed", zIndex: 50 });
+            gsap.set(productImg, { position: "fixed", zIndex: 100, opacity: 1 });
+          },
+          onLeave: () => {
+            // Permanently "land" it here so it doesn't follow to Menu
+            gsap.set(productImg, {
+              position: "absolute",
+              top: aboutPlaceholder.offsetTop + 40,
+              left: aboutPlaceholder.offsetLeft - 280,
+              width: aboutPlaceholder.offsetWidth * 1.2,
+              height: "auto",
+              zIndex: 100
+            });
+          },
+          onEnterBack: () => {
+            gsap.set(productImg, { position: "fixed", zIndex: 100 });
           },
           onLeaveBack: () => {
-            gsap.set(productImg, { position: "static", x: 0, y: 0, width: "auto", height: "auto", zIndex: "auto" });
+            gsap.set(productImg, { position: "static", zIndex: "auto", width: "auto" });
           }
-        },
+        }
       });
+
       const startRect = productImg.getBoundingClientRect();
-      const initialCenterX = startRect.left + startRect.width / 2;
-      const initialCenterY = startRect.top + startRect.height / 2;
-      const placeholder = contentWrapperRef.current?.firstElementChild as HTMLElement;
-      if (!placeholder) return;
-      const placeholderRect = placeholder.getBoundingClientRect();
-      const aboutRect = aboutContainerRef.current!.getBoundingClientRect();
-      const placeholderOffsetY = placeholderRect.top - aboutRect.top;
-      const placeholderOffsetX = placeholderRect.left - aboutRect.left;
-      const endAboutTopInViewport = (window.innerHeight - aboutRect.height) / 2;
-      const targetX = aboutRect.left + placeholderOffsetX;
-      const targetY = endAboutTopInViewport + placeholderOffsetY;
-      timeline.fromTo(productImg,
+
+      // Phase 1: Hero -> About
+      masterTL.fromTo(productImg,
         {
           top: startRect.top,
           left: startRect.left,
           width: startRect.width,
           height: startRect.height,
           position: "fixed",
-          x: 0,
-          y: 0
         },
         {
-          top: targetY,
-          left: targetX + 20,
-          width: placeholderRect.width,
-          height: "auto",
+          top: 80,
+          left: () => {
+            const wrapper = contentWrapperRef.current;
+            if (!wrapper) return 0;
+            return wrapper.offsetLeft + aboutPlaceholder.offsetLeft - 280;
+          },
+          width: aboutPlaceholder.offsetWidth * 1.2,
+          duration: 1,
           ease: "power1.inOut"
         }
       );
+
+      // Phase 2: Stay fixed in About and fade in blob
+      masterTL.to(productImg, {
+        duration: 0.5,
+        onStart: () => { if (blob) gsap.to(blob, { opacity: 1 }); },
+        onReverseComplete: () => { if (blob) gsap.to(blob, { opacity: 0 }); }
+      });
+
     });
     return () => ctx.revert();
-  }, [productImageRef, aboutContainerRef]);
+  }, [productImageRef, aboutContainerRef, menuContainerRef]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentFlavor, setCurrentFlavor] = useState<Flavor>(data[0]);
   const textRef = useRef<HTMLHeadingElement | null>(null);
@@ -274,7 +301,7 @@ function Hero() {
         />
         <div
           ref={contentWrapperRef}
-          className="w-full max-w-6xl flex items-center justify-between gap-12"
+          className="w-full max-w-6xl flex items-center justify-between gap-24"
         >
           <div className="shrink-0 w-1/3 h-80" />
           <div className="flex-1">
@@ -295,7 +322,7 @@ function Hero() {
             </p>
           </div>
         </div>
-        <div className="h-96" />
+        <div className="h-150" />
       </div>
     </>
   );

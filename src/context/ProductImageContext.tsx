@@ -4,6 +4,7 @@ import React, { createContext, useContext, useRef, ReactNode } from "react";
 type ProductImageContextType = {
     productImageRef: React.RefObject<HTMLDivElement | null>;
     aboutContainerRef: React.RefObject<HTMLDivElement | null>;
+    menuContainerRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const ProductImageContext = createContext<ProductImageContextType | undefined>(
@@ -13,9 +14,10 @@ const ProductImageContext = createContext<ProductImageContextType | undefined>(
 export function ProductImageProvider({ children }: { children: ReactNode }) {
     const productImageRef = useRef<HTMLDivElement>(null);
     const aboutContainerRef = useRef<HTMLDivElement>(null);
+    const menuContainerRef = useRef<HTMLDivElement>(null);
 
     return (
-        <ProductImageContext.Provider value={{ productImageRef, aboutContainerRef }}>
+        <ProductImageContext.Provider value={{ productImageRef, aboutContainerRef, menuContainerRef }}>
             {children}
         </ProductImageContext.Provider>
     );
