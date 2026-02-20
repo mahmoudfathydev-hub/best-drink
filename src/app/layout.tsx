@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ProductImageProvider } from "@/context/ProductImageContext";
 import { FlavorProvider } from "@/context/FlavorContext";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
             <ProductImageProvider>
               <Navbar />
               {children}
+              <Footer />
             </ProductImageProvider>
           </FlavorProvider>
         </ThemeProvider>
