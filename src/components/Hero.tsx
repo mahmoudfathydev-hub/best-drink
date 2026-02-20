@@ -26,6 +26,7 @@ function Hero() {
   const textRef = useRef<HTMLHeadingElement | null>(null);
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
   const lastDirectionRef = useRef<"next" | "prev">("next");
+  const blobRef = useRef<HTMLDivElement | null>(null);
 
   const getImagePath = (path: string) => path.replace("public", "");
 
@@ -91,6 +92,17 @@ function Hero() {
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
+  }, []);
+
+  useEffect(() => {
+    if (blobRef.current) {
+      gsap.to(blobRef.current, {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none",
+      });
+    }
   }, []);
 
   return (
@@ -184,7 +196,18 @@ function Hero() {
         </div>
       </main>
 
-      <section className="relative min-h-screen bg-white py-20 px-6 flex items-center justify-center">
+      <section className="relative h-[80vh] bg-white py-20 px-6 flex items-center justify-center isolate">
+        <div
+          ref={blobRef}
+          className="absolute left-25 md:left-30 top-1/2 -translate-y-1/2 -z-10 pointer-events-none"
+          style={{
+            width: "330px",
+            height: "420px",
+            backgroundColor: currentFlavor.backgroundColor,
+            borderRadius: "85% 15% 89% 11% / 51% 46% 54% 49%",
+            filter: "blur(15px)",
+          }}
+        />
         <div className="w-full max-w-6xl flex items-center justify-between gap-24">
           <div className="shrink-0 w-1/3 h-80 relative" />
           <div className="flex-1">
