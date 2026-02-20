@@ -80,8 +80,9 @@ function Hero() {
             end: "bottom 20%",
             scrub: true,
           },
-          y: "80vh",
-          x: "-20vw",
+          y: "95vh",
+          x: "-25vw",
+          scale: 0.8,
           ease: "power1.inOut",
         });
       },
@@ -187,14 +188,22 @@ function Hero() {
         <div className="w-full max-w-6xl flex items-center justify-between gap-24">
           <div className="shrink-0 w-1/3 h-80 relative" />
           <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 "
+              style={{ color: currentFlavor.backgroundColor }}>
               About Best Egyptian Juice
             </h2>
-            <p className="text-lg leading-relaxed text-gray-700 mb-6">
-              Best Egyptian Juice is a premium beverage brand delivering a refreshing experience in every sip.
+
+            <p className="text-lg leading-relaxed text-black mb-6">
+              Best Egyptian Juice is a premium beverage brand dedicated to delivering a truly refreshing
+              and elevated juice experience. Every bottle is crafted to capture the vibrant spirit of
+              Egypt’s rich agricultural heritage while embracing modern standards of quality and taste.
             </p>
-            <p className="text-lg leading-relaxed text-gray-700">
-              Crafted with high-quality ingredients and vibrant flavors for authentic refreshment.
+
+            <p className="text-lg leading-relaxed text-black mb-6">
+              We carefully select high-quality fruits sourced from trusted farms, ensuring that every
+              ingredient meets strict freshness and purity standards. Our production process preserves
+              natural flavors, essential nutrients, and the authentic sweetness that makes every sip
+              memorable and satisfying.
             </p>
           </div>
         </div>
