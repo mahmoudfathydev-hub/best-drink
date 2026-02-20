@@ -8,7 +8,9 @@
       "public/images/apple3.png",
       "public/images/apple4.png"
     ],
-    "backgroundColor": "#C62822"
+    "backgroundColor": "#C62822",
+    "bgCard": "#9e201b",
+    "description": "Fresh red apple flavor with a crisp, juicy taste and smooth finish that delivers natural sweetness and refreshing energy in every sip. Perfect for a daily boost or afternoon refreshment."
   },
   {
     "flavor": "Lemon",
@@ -19,7 +21,9 @@
       "public/images/lemon3.png",
       "public/images/lemon4.png"
     ],
-    "backgroundColor": "#FBC02D"
+    "backgroundColor": "#FBC02D",
+    "bgCard": "#c99a24",
+    "description": "Zesty lemon burst with a vibrant citrus kick, perfectly balanced between tangy freshness and light sweetness for an instantly uplifting experience. Ideal for hot days or post-workout refreshment."
   },
   {
     "flavor": "Chocolate",
@@ -30,7 +34,9 @@
       "public/images/chocolate3.png",
       "public/images/chocolate4.png"
     ],
-    "backgroundColor": "#4E342E"
+    "backgroundColor": "#4E342E",
+    "bgCard": "#3e2a25",
+    "description": "Rich chocolate flavor with creamy depth and smooth texture, offering a bold indulgent taste that satisfies cravings with every refreshing sip. Great for dessert lovers and chocolate enthusiasts."
   },
   {
     "flavor": "Pomegranate",
@@ -41,7 +47,9 @@
       "public/images/pomegranate3.png",
       "public/images/pomegranate4.png"
     ],
-    "backgroundColor": "#8E0038"
+    "backgroundColor": "#8E0038",
+    "bgCard": "#71002d",
+    "description": "Exotic pomegranate infusion delivering a sweet and slightly tart profile, layered with fruity richness and a clean, revitalizing aftertaste. Perfect for a sophisticated fruity refreshment."
   },
   {
     "flavor": "Orange",
@@ -52,7 +60,9 @@
       "public/images/orange3.png",
       "public/images/orange4.png"
     ],
-    "backgroundColor": "#FB8C00"
+    "backgroundColor": "#FB8C00",
+    "bgCard": "#c97000",
+    "description": "Bright orange flavor packed with sunny citrus notes, combining juicy sweetness and sparkling freshness for a lively, energizing refreshment. Perfect for mornings or as a summer thirst-quencher."
   },
   {
     "flavor": "Cola",
@@ -63,7 +73,9 @@
       "public/images/cola3.png",
       "public/images/cola4.png"
     ],
-    "backgroundColor": "#3E2723"
+    "backgroundColor": "#3E2723",
+    "bgCard": "#2d1c19",
+    "description": "Classic cola taste with bold caramel notes and smooth carbonation, delivering timeless refreshment and a perfectly balanced sweet finish. Ideal for social gatherings or casual enjoyment anytime."
   },
   {
     "flavor": "Cherry",
@@ -74,6 +86,8 @@
       "public/images/cherry3.png",
       "public/images/cherry4.png"
     ],
-    "backgroundColor": "#C62829"
+    "backgroundColor": "#C62829",
+    "bgCard": "#9e2021",
+    "description": "Sweet cherry flavor bursting with fruity intensity and smooth refreshment, offering a vibrant taste that lingers pleasantly after every sip. Great choice for a fruity, playful energy boost."
   }
 ]

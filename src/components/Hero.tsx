@@ -5,6 +5,7 @@ import { Gravitas_One } from "next/font/google";
 import data from "../data/data.json";
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useFlavor } from "@/context/FlavorContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -21,12 +22,13 @@ type Flavor = (typeof data)[0];
 
 function Hero() {
   const { setBackgroundColor } = useTheme();
+  const { currentFlavor, setCurrentFlavor } = useFlavor();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentFlavor, setCurrentFlavor] = useState<Flavor>(data[0]);
   const textRef = useRef<HTMLHeadingElement | null>(null);
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
   const lastDirectionRef = useRef<"next" | "prev">("next");
   const blobRef = useRef<HTMLDivElement | null>(null);
+  const aboutTextRef = useRef<HTMLDivElement | null>(null);
 
   const getImagePath = (path: string) => path.replace("public", "");
 
@@ -35,7 +37,7 @@ function Hero() {
     setCurrentIndex((prev) =>
       dir === "next"
         ? (prev + 1) % data.length
-        : (prev - 1 + data.length) % data.length
+        : (prev - 1 + data.length) % data.length,
     );
   };
 
@@ -51,7 +53,7 @@ function Hero() {
       gsap.fromTo(
         textRef.current,
         { x: fromX, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
+        { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
       );
     }
 
@@ -66,7 +68,7 @@ function Hero() {
           duration: 0.8,
           delay: i * 0.1,
           ease: "power3.out",
-        }
+        },
       );
     });
   }, [currentIndex, setBackgroundColor]);
@@ -81,7 +83,7 @@ function Hero() {
             end: "bottom 20%",
             scrub: true,
           },
-          y: "95vh",
+          y: "82vh",
           x: "-25vw",
           scale: 0.8,
           ease: "power1.inOut",
@@ -105,6 +107,26 @@ function Hero() {
     }
   }, []);
 
+  useEffect(() => {
+    if (aboutTextRef.current) {
+      gsap.fromTo(
+        aboutTextRef.current.children,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.2,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: aboutTextRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    }
+  }, []);
+
   return (
     <>
       <main
@@ -124,12 +146,13 @@ function Hero() {
 
           <div className="container mx-auto px-4 z-10 w-full h-full">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center h-full">
-
               <div className="md:col-span-1 flex flex-col gap-8">
                 {[0, 1].map((i) => (
                   <div
                     key={i}
-                    ref={(el) => { imagesRef.current[i] = el; }}
+                    ref={(el) => {
+                      imagesRef.current[i] = el;
+                    }}
                   >
                     <Image
                       src={getImagePath(currentFlavor.images[i])}
@@ -158,7 +181,9 @@ function Hero() {
                 {[2, 3].map((i, index) => (
                   <div
                     key={i}
-                    ref={(el) => { imagesRef.current[index + 2] = el; }}
+                    ref={(el) => {
+                      imagesRef.current[index + 2] = el;
+                    }}
                   >
                     <Image
                       src={getImagePath(currentFlavor.images[i])}
@@ -170,7 +195,6 @@ function Hero() {
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
         </div>
@@ -210,23 +234,28 @@ function Hero() {
         />
         <div className="w-full max-w-6xl flex items-center justify-between gap-24">
           <div className="shrink-0 w-1/3 h-80 relative" />
-          <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 "
-              style={{ color: currentFlavor.backgroundColor }}>
+          <div className="flex-1" ref={aboutTextRef}>
+            <h2
+              className="text-4xl md:text-5xl font-bold mb-6 "
+              style={{ color: currentFlavor.backgroundColor }}
+            >
               About Best Egyptian Juice
             </h2>
 
             <p className="text-lg leading-relaxed text-black mb-6">
-              Best Egyptian Juice is a premium beverage brand dedicated to delivering a truly refreshing
-              and elevated juice experience. Every bottle is crafted to capture the vibrant spirit of
-              Egypt’s rich agricultural heritage while embracing modern standards of quality and taste.
+              Best Egyptian Juice is a premium beverage brand dedicated to
+              delivering a truly refreshing and elevated juice experience. Every
+              bottle is crafted to capture the vibrant spirit of Egypt’s rich
+              agricultural heritage while embracing modern standards of quality
+              and taste.
             </p>
 
             <p className="text-lg leading-relaxed text-black mb-6">
-              We carefully select high-quality fruits sourced from trusted farms, ensuring that every
-              ingredient meets strict freshness and purity standards. Our production process preserves
-              natural flavors, essential nutrients, and the authentic sweetness that makes every sip
-              memorable and satisfying.
+              We carefully select high-quality fruits sourced from trusted
+              farms, ensuring that every ingredient meets strict freshness and
+              purity standards. Our production process preserves natural
+              flavors, essential nutrients, and the authentic sweetness that
+              makes every sip memorable and satisfying.
             </p>
           </div>
         </div>

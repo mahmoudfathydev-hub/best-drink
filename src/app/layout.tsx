@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ProductImageProvider } from "@/context/ProductImageContext";
+import { FlavorProvider } from "@/context/FlavorContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,13 +26,14 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`${inter.variable} antialiased`}
-      >
+      <body className={`${inter.variable} antialiased`}>
         <ThemeProvider>
-          <ProductImageProvider>
-            <Navbar />
-            {children}
-          </ProductImageProvider>
+          <FlavorProvider>
+            <ProductImageProvider>
+              <Navbar />
+              {children}
+            </ProductImageProvider>
+          </FlavorProvider>
         </ThemeProvider>
       </body>
     </html>
