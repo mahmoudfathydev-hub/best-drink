@@ -122,7 +122,7 @@ function Hero() {
             trigger: aboutTextRef.current,
             start: "top 80%",
           },
-        }
+        },
       );
     }
   }, []);

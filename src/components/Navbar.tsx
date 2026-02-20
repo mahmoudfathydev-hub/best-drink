@@ -12,10 +12,10 @@ function Navbar() {
   const { backgroundColor } = useTheme();
 
   const links = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Products", href: "/products" },
-    { name: "Contact", href: "/contact" },
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Products", href: "#products" },
+    { name: "Contact", href: "#contact" },
   ];
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function Navbar() {
 
         <div className="hidden md:block">
           <Link
-            href="/contact"
+            href="#contact"
             className="flex items-center gap-2 bg-transparent text-white font-semibold px-4 py-2 rounded-lg transition-colors"
             onClick={handleLinkClick}
           >
@@ -91,8 +91,9 @@ function Navbar() {
         </div>
       </div>
       <div
-        className={`md:hidden w-full overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 py-4" : "max-h-0 py-0"
-          }`}
+        className={`md:hidden w-full overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-96 py-4" : "max-h-0 py-0"
+        }`}
         style={{ backgroundColor }}
       >
         <div className="container mx-auto px-4 flex flex-col items-center gap-6">
@@ -107,7 +108,7 @@ function Navbar() {
             </Link>
           ))}
           <Link
-            href="/contact"
+            href="#contact"
             className="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors mt-2"
             onClick={handleLinkClick}
           >
