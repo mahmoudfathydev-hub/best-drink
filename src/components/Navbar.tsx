@@ -43,8 +43,8 @@ function Navbar() {
         transition: "background-color 300ms ease",
       }}
     >
-      <div className="container p-2 max-w-7xl mx-auto flex justify-between items-center font-medium px-4">
-        <div className="logo p-2 rounded-full w-15 h-15 md:w-20 md:h-20 transition-all duration-300">
+      <div className="container p-2 max-w-7xl mx-auto flex justify-between items-center font-medium px-2 sm:px-4">
+        <div className="logo p-1 sm:p-2 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 transition-all duration-300">
           <Link href="/" onClick={handleLinkClick}>
             <Image
               src="/images/Newlogo.png"
@@ -57,12 +57,12 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-white hover:text-gray-200 transition-colors text-base font-medium"
+              className="text-white hover:text-gray-200 transition-colors text-sm lg:text-base font-medium"
               onClick={handleLinkClick}
             >
               {link.name}
@@ -70,23 +70,27 @@ function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Link
             href="#contact"
-            className="flex items-center gap-2 bg-transparent text-white font-semibold px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-transparent text-white font-semibold px-3 lg:px-4 py-2 rounded-lg transition-colors text-sm lg:text-base"
             onClick={handleLinkClick}
           >
             Call Us
-            <Phone size={20} />
+            <Phone size={16} className="lg:w-5 lg:h-5" />
           </Link>
         </div>
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-700 hover:text-blue-600 focus:outline-none"
+            className="text-white hover:text-gray-200 focus:outline-none p-1"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            {isOpen ? (
+              <X size={24} className="sm:w-6 sm:h-6" />
+            ) : (
+              <Menu size={24} className="sm:w-6 sm:h-6" />
+            )}
           </button>
         </div>
       </div>
@@ -96,12 +100,12 @@ function Navbar() {
         }`}
         style={{ backgroundColor }}
       >
-        <div className="container mx-auto px-4 flex flex-col items-center gap-6">
+        <div className="container mx-auto px-2 sm:px-4 flex flex-col items-center gap-4">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="w-full text-center py-2 text-lg hover:text-blue-600 transition-colors"
+              className="w-full text-center py-2 text-base sm:text-lg hover:text-gray-200 transition-colors text-white"
               onClick={handleLinkClick}
             >
               {link.name}
@@ -109,11 +113,11 @@ function Navbar() {
           ))}
           <Link
             href="#contact"
-            className="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors mt-2"
+            className="w-full flex justify-center items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-base sm:text-lg"
             onClick={handleLinkClick}
           >
-            اتصل بنا
-            <Phone size={20} />
+            Call Us
+            <Phone size={18} className="sm:w-5 sm:h-5" />
           </Link>
         </div>
       </div>
